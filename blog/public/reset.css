@@ -1,0 +1,119 @@
+/* 消除边距 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+hr,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+blockquote,
+p {
+    padding: 0;
+    margin: 0;
+}
+
+/*列表样式消除*/
+
+ol,
+ul,
+li {
+    list-style: none;
+}
+
+/* a标签样式重置 */
+
+a {
+    text-decoration: none;
+}
+
+/*盒模型默认使用内边框*/
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/*清除浮动*/
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* Hides from IE-mac */
+
+* html .clearfix {
+    height: 1%;
+}
+
+.clearfix {
+    display: block;
+}
+
+/* End hide from IE-mac */
+
+*+html .clearfix {
+    min-height: 1%;
+}
+
+/*合并表格边框*/
+
+table,
+td,
+tr,
+th {
+    border-collapse: collapse;
+}
+
+/*img在盒子中有下边距*/
+
+img {
+    /*IE7*/
+    border: none;
+    vertical-align: middle;
+}
+
+/*全局设置*/
+
+body {
+    font: Helvetica, Arial, "Helvetica Neue", "Microsoft yahei", "SimHei", sans-serif;
+}
+
+/* 单行文本超出隐藏并显示省略 */
+
+.overflow-1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 多行文本超出隐藏并显示省略 */
+
+.overFlow-n {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+}
