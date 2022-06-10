@@ -130,10 +130,7 @@ export default {
   },
   methods: {
     async getData(pageNum) {
-      let data = await this.$API.getPicInfo(pageNum);
-      if (data) {
-        this.picInfo = data;
-      }
+      this.picInfo = await this.$API.getPicInfo(pageNum);
     },
     goPageNo(pageNum) {
       document.documentElement.scrollTop = 0;

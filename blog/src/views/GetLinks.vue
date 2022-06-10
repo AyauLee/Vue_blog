@@ -21,7 +21,7 @@
                 <el-card v-for="link in links.docs" :key="link._id">
                   <h3>{{ link.title }}</h3>
                   <p>
-                    <a :href="link.url" target="blank">{{ link.url }}</a>
+                    <a :href="link.url" target="_blank">{{ link.url }}</a>
                   </p>
                 </el-card>
               </el-timeline-item>

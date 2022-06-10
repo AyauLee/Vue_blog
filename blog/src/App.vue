@@ -36,7 +36,7 @@ export default {
   color: #fff;
 }
 body {
-  background: url("./views/images/雾漫小东江.jpg") no-repeat fixed;
+  background: #8e8ca6 url("./assets/images/dongjiang.jpg") no-repeat fixed;
   background-size: cover;
 }
 .font-mt {

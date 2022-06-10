@@ -23,7 +23,13 @@
           <span>{{ scope.row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" prop="status"> </el-table-column>
+      <el-table-column label="状态">
+        <template slot-scope="scope">
+          <span :class="{ noreply: scope.row.status == '待回复' }">{{
+            scope.row.status
+          }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -56,7 +62,7 @@
         <div>
           <p>回复ta：</p>
           <textarea
-            v-model="form.reply"
+            v-model.trim="form.reply"
             class="reply_body"
             cols="50"
             rows="5"
@@ -107,20 +113,27 @@ export default {
       this.dialogShow = true;
     },
     // 点击删除的处理函数
-    handleDelete(index, row) {
-      if (!this.isAdmin) return this.$message.error("暂无该权限");
-      this.$API
-        .deleteMessage(row._id)
-        .then((result) => {
-          if (result.status == 0) {
-            this.$message({ type: "success", message: result.message });
-            this.getData();
-            return;
-          } else {
-            this.$message.error(result.message);
-          }
-        })
-        .catch(() => {});
+    async handleDelete(index, row) {
+      try {
+        await this.$confirm("此操作将永久删除该留言, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        });
+        if (!this.isAdmin) return this.$message.error("暂无该权限");
+        let result = await this.$API.deleteMessage(row._id);
+        if (result.status == 0) {
+          this.$message({ type: "success", message: result.message });
+          this.getData();
+        } else {
+          this.$message.error(result.message);
+        }
+      } catch (error) {
+        if (error == "cancel") {
+          return this.$message({ type: "info", message: "已取消删除" });
+        }
+        this.$message.error("删除失败！");
+      }
     },
     // 取消的回调
     noHandle() {
@@ -130,25 +143,21 @@ export default {
       }
     },
     // 确定的回调
-    hasHandle() {
+    async hasHandle() {
       if (!this.form.reply) {
         return this.$message.error("回复内容不能为空！");
-      } else {
-        if (!this.isAdmin) return this.$message.error("暂无该权限");
-        this.$API
-          .reqReplyInfo(this.form)
-          .then((result) => {
-            if (result.status == 0) {
-              this.$message({ type: "success", message: result.message });
-              this.noHandle();
-              this.getData();
-            } else {
-              this.$message.error(result.message);
-            }
-          })
-          .catch(() => {
-            this.$message.error("操作失败！");
-          });
+      }
+      try {
+        let result = await this.$API.reqReplyInfo(this.form);
+        if (result.status == 0) {
+          this.$message({ type: "success", message: result.message });
+          this.noHandle();
+          this.getData();
+        } else {
+          this.$message.error(result.message);
+        }
+      } catch (error) {
+        this.$message.error("操作失败！");
       }
     },
   },
@@ -189,6 +198,9 @@ export default {
       margin-left: 15px;
       font-size: 12px;
     }
+  }
+  .noreply {
+    color: orangered;
   }
 }
 </style>

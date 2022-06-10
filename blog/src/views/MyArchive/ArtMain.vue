@@ -29,7 +29,7 @@ marked.setOptions({
   highlight: function (code, lang) {
     const hljs = require("highlight.js");
     const language = hljs.getLanguage(lang) ? lang : "plaintext";
-    return hljs.highlight(code, { language }).value;
+    return hljs.highlight(code, { language, ignoreIllegals: true }).value;
   },
   langPrefix: "hljs language-", // highlight.js css expects a top-level 'hljs' class.
   pedantic: false,
@@ -123,6 +123,9 @@ export default {
     }
     pre {
       padding: 0 10px;
+    }
+    img {
+      width: 90%;
     }
   }
 }

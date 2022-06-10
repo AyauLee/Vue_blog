@@ -162,22 +162,22 @@ export default {
       List: [
         {
           imgUrl:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2F1114%2F021621112351%2F210216112351-5-1200.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654173714&t=bae31ede18094f6ec519d162cd376e83",
+            "https://server.letxi.cn/uploads/2a6e096c5f5c5cb4b24cc5b405687647",
           id: 1,
         },
         {
           imgUrl:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2F1114%2F0G320103A8%2F200G3103A8-1-1200.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654173714&t=d992b8db3010cfdcb3d5e0cb2ba6b448",
+            "https://server.letxi.cn/uploads/9330d998c81b05ea9558b19cd5d8ed33",
           id: 2,
         },
         {
           imgUrl:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp06%2F200QQU3202Y7-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654173714&t=546c935c2e856306f940c3a9f8caebda",
+            "https://server.letxi.cn/uploads/b0f94df8f41e79926081789c3cfdb87a",
           id: 3,
         },
         {
           imgUrl:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2018-06-15%2F5b236a18acfc0.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654173714&t=011753365831c2db1fd73fe71d2a812d",
+            "https://server.letxi.cn/uploads/aa39a865186e82ab1df2117f448a19ec",
           id: 4,
         },
       ],

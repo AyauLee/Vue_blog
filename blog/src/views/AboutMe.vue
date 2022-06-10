@@ -28,7 +28,11 @@
             <h3>联系我</h3>
             <p>你可以在以下平台联系我/与我交流</p>
             <ul>
-              <li>Github：<a href="https://github.com/AyauLee">AyauLee</a></li>
+              <li>
+                Github：<a href="https://github.com/AyauLee" target="_blank"
+                  >AyauLee</a
+                >
+              </li>
               <li>QQ：603759211</li>
               <li>Email：xi.xz@foxmail.com</li>
             </ul>

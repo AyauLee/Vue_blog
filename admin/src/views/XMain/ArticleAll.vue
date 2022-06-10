@@ -6,7 +6,7 @@
           <div class="markbody">
             <h4>文章简介</h4>
             <p>{{ props.row.introduction }}</p>
-            <div v-html="props.row.body"></div>
+            <div class="markimg" v-html="props.row.body"></div>
           </div>
         </template>
       </el-table-column>
@@ -52,12 +52,12 @@
 // marked
 import { marked } from "marked";
 // 代码高亮
-import hljs from "highlight.js";
+// import hljs from "highlight.js";
 import "highlight.js/styles/github-dark-dimmed.css";
 marked.setOptions({
   renderer: new marked.Renderer(),
   highlight: function (code, lang) {
-    // const hljs = require("highlight.js")
+    const hljs = require("highlight.js");
     const language = hljs.getLanguage(lang) ? lang : "vbscript";
     return hljs.highlight(code, { language, ignoreIllegals: true }).value;
   },
@@ -107,33 +107,28 @@ export default {
       });
     },
     // 删除的处理函数
-    handleDelete(index, row) {
-      this.$confirm("此操作将永久删除该分类, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(async () => {
-          if (!this.$store.getters.isAdmin) {
-            return this.$message.error("暂无该权限！");
-          }
-          let result = await this.$API.deleteArticleById(row._id);
-          if (result.status == 0) {
-            this.$message({
-              message: result.message,
-              type: "success",
-            });
-          } else {
-            this.$message.error(result.message);
-          }
-          this.$store.dispatch("getArticles");
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
+    async handleDelete(index, row) {
+      try {
+        await this.$confirm("此操作将永久删除该文章, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         });
+        if (!this.$store.getters.isAdmin)
+          return this.$message.error("暂无该权限！");
+        let result = await this.$API.deleteArticleById(row._id);
+        if (result.status == 0) {
+          this.$message({ message: result.message, type: "success" });
+        } else {
+          this.$message.error(result.message);
+        }
+        this.$store.dispatch("getArticles");
+      } catch (error) {
+        if (error == "cancel") {
+          return this.$message({ type: "info", message: "已取消删除" });
+        }
+        this.$message.error("删除失败！");
+      }
     },
   },
   mounted() {
@@ -161,6 +156,11 @@ export default {
   max-height: 600px;
   overflow: scroll;
   line-height: 20px !important;
+  .markimg {
+    /deep/img {
+      width: 90%;
+    }
+  }
 }
 .tags {
   padding: 0 3px;

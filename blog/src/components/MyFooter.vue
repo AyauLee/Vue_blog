@@ -1,9 +1,22 @@
 <template>
   <div class="footer">
-    <p>Copyright © 2022 xxxx</p>
-    <p>
-      <a href="https://beian.miit.gov.cn/" class="font-xk">xxx备案号</a>
-    </p>
+    <div class="copyright">
+      <p>Copyright © 2022. letxi.cn</p>
+      <p>
+        <a target="_blank" href="http://www.beian.gov.cn/" class="font-xk"
+          ><img
+            src="../assets/images/备案图标.png"
+            alt=""
+            height="14px"
+          />公网安备号码 xxxxxxxxxxxx号</a
+        >
+      </p>
+      <p>
+        <a target="_blank" href="https://beian.miit.gov.cn/" class="font-xk"
+          >ICP备案号 xxxxxxxxxxxxxx号</a
+        >
+      </p>
+    </div>
   </div>
 </template>
 
@@ -15,17 +28,25 @@ export default {
 
 <style lang='less' scoped>
 .footer {
+  display: flex;
+  justify-content: center;
   margin-top: 100px;
-  padding-top: 15px;
   height: 100px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.8);
+  .copyright {
+    width: 350px;
+    padding-top: 15px;
+    text-align: center;
+  }
   p {
-    font-family: Arial, Helvetica, sans-serif;
-    padding-top: 5px;
+    padding: 2px 0;
+    font: 14px "Microsoft YaHei";
     a {
-      font-size: 14px;
       color: #fff;
+      img {
+        vertical-align: text-bottom;
+      }
       &:hover {
         color: orangered;
       }

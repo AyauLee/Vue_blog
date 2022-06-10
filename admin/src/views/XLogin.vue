@@ -5,11 +5,11 @@
         <h4>博客后台登录</h4>
         <div class="ipt">
           <i class="el-icon-user-solid"></i>
-          <input type="text" v-model="username" />
+          <input type="text" v-model.trim="username" v-getfocus />
         </div>
         <div class="ipt">
           <i class="el-icon-lock"></i>
-          <input type="password" v-model="password" />
+          <input type="password" v-model.trim="password" />
         </div>
         <a href="javascript:;" @click="loginAdmin">登录</a>
         <el-divider><p class="look">浏览账号</p></el-divider>
@@ -58,9 +58,19 @@ export default {
     // 绑定监听事件
     window.addEventListener("keydown", this.keyDown);
   },
-  destroyed() {
+  beforeDestroy() {
     // 销毁事件
     window.removeEventListener("keydown", this.keyDown);
+  },
+  directives: {
+    getfocus: {
+      //指令所在元素被插入页面时
+      inserted(element) {
+        if (!element.value) {
+          element.focus();
+        }
+      },
+    },
   },
 };
 </script>

@@ -4,6 +4,27 @@ import VueRouter from 'vue-router'; // 引入路由
 // 应用插件
 Vue.use(VueRouter);
 
+// 解决编程式路由导航重复跳转报错的问题
+// 先把VueRouter原型对象的push | replace，先保存一份
+let originPush = VueRouter.prototype.push;
+let originReplace = VueRouter.prototype.replace;
+// 重写push | replace
+// 第一个参数，告诉原来push方法，往哪里跳转（传递哪些参数）
+VueRouter.prototype.push = function (location, resolve, reject) {
+    if (resolve && reject) {
+        originPush.call(this, location, resolve, reject)
+    } else {
+        originPush.call(this, location, () => { }, () => { })
+    }
+}
+VueRouter.prototype.replace = function (location, resolve, reject) {
+    // 这个函数的this就是VueRouter类的一个实例$router
+    if (resolve && reject) {
+        originReplace.call(this, location, resolve, reject)
+    } else {
+        originReplace.call(this, location, () => { }, () => { })
+    }
+}
 
 // 配置路由
 export default new VueRouter({

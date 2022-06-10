@@ -103,22 +103,22 @@ export default {
   methods: {
     // 自定义上传图片
     async httpUpload({ file }) {
-      // this.handleStorage();
       // 将图片上传到服务器.
       let formdata = new FormData();
       formdata.append("image", file);
-      let newurl = await this.$API.uploadImg(formdata);
-      if (newurl) {
+      try {
+        let newurl = await this.$API.uploadImg(formdata);
         this.imageUrl = newurl;
         let { _id, avatar } = this.userInfo;
-        this.$API.updateAvatar(_id, avatar, newurl).then((result) => {
-          if (result.status == 0) {
-            this.$message({ type: "success", message: result.message });
-            this.$store.dispatch("getUserInfo");
-          } else {
-            this.$message.error(result.message);
-          }
-        });
+        let result = await this.$API.updateAvatar(_id, avatar, newurl);
+        if (result.status == 0) {
+          this.$message({ type: "success", message: result.message });
+          this.$store.dispatch("getUserInfo");
+        } else {
+          this.$message.error(result.message);
+        }
+      } catch (error) {
+        this.$message.error("操作失败！");
       }
     },
     onSubmit() {

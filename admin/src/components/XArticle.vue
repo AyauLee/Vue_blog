@@ -146,26 +146,22 @@ export default {
         })
         .catch(() => {});
     },
-    savebook() {
+    async savebook() {
       if (!this.isAdmin) return this.$message.error("暂无该权限！");
       let tags = this.form.tags.join("@");
       let data = { ...this.form, body: this.body, tags };
-      this.$refs.form.validate().then(async () => {
-        try {
-          let result = await this.$store.dispatch("updateArticle", data);
-          this.$message({
-            message: result,
-            type: "success",
-          });
-          this.$refs.form.resetFields();
-          this.body = "";
-          if (result == "更新文章成功！") {
-            this.$router.push("/article");
-          }
-        } catch (err) {
-          this.$message.error(err);
+      try {
+        await this.$refs.form.validate();
+        let result = await this.$store.dispatch("updateArticle", data);
+        this.$message({ message: result, type: "success" });
+        this.$refs.form.resetFields();
+        this.body = "";
+        if (result == "更新文章成功！") {
+          this.$router.push("/article");
         }
-      });
+      } catch (error) {
+        this.$message.error("操作失败！");
+      }
     },
   },
 };

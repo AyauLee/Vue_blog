@@ -73,7 +73,7 @@ export default {
       }
     },
     goPageNo(pageNum) {
-      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getData(pageNum);
     },
   },

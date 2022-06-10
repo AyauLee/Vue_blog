@@ -2,7 +2,7 @@
   <div class="artcate">
     <el-table
       :data="artCateInfo"
-      style="width: 100%; padding: 30px; font-size: 16px"
+      style="width: 100%; font-size: 16px"
       height="100%"
       :header-cell-style="{ 'padding-left': '30px' }"
     >
@@ -103,31 +103,23 @@ export default {
       this.dialogFormVisible = true;
     },
     // 删除分类
-    handleDelete(index, row) {
-      this.$confirm("此操作将永久删除该分类, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(async () => {
-          try {
-            if (!this.isAdmin) return this.$message.error("暂无该权限！");
-            let result = await this.$store.dispatch("deleteArtCate", row._id);
-            this.$message({
-              message: result,
-              type: "success",
-            });
-            this.$store.dispatch("getArtCateInfo");
-          } catch (error) {
-            this.$message.error("删除失败！");
-          }
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
+    async handleDelete(index, row) {
+      try {
+        await this.$confirm("此操作将永久删除该分类, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         });
+        if (!this.isAdmin) return this.$message.error("暂无该权限！");
+        let result = await this.$store.dispatch("deleteArtCate", row._id);
+        this.$message({ message: result, type: "success" });
+        this.$store.dispatch("getArtCateInfo");
+      } catch (error) {
+        if (error == "cancel") {
+          return this.$message({ type: "info", message: "已取消删除" });
+        }
+        this.$message.error("删除失败！");
+      }
     },
     // 取消的回调
     noHandle() {
@@ -164,7 +156,7 @@ export default {
   height: 100%;
   .addcate {
     position: absolute;
-    top: 30px;
+    top: 5px;
     right: 40px;
   }
   /deep/.el-table__row {

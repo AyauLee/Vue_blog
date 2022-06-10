@@ -97,31 +97,23 @@ export default {
       this.dialogFormVisible = true;
     },
     // 删除链接
-    handleDelete(index, row) {
-      this.$confirm("此操作将永久删除该链接, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(async () => {
-          try {
-            if (!this.isAdmin) return this.$message.error("暂无该权限！");
-            let result = await this.$store.dispatch("deleteLink", row._id);
-            this.$message({
-              message: result,
-              type: "success",
-            });
-            this.$store.dispatch("getLinksInfo");
-          } catch (error) {
-            this.$message.error("删除失败！");
-          }
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
+    async handleDelete(index, row) {
+      try {
+        await this.$confirm("此操作将永久删除该链接, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
         });
+        if (!this.isAdmin) return this.$message.error("暂无该权限！");
+        let result = await this.$store.dispatch("deleteLink", row._id);
+        this.$message({ message: result, type: "success" });
+        this.$store.dispatch("getLinksInfo");
+      } catch (error) {
+        if (error == "cancel") {
+          return this.$message({ type: "info", message: "已取消删除" });
+        }
+        this.$message.error("删除失败！");
+      }
     },
     // 取消的回调
     noHandle() {
@@ -136,10 +128,7 @@ export default {
         if (!this.isAdmin) return this.$message.error("暂无该权限！");
         let result = await this.$store.dispatch("updateLink", this.form);
         this.noHandle();
-        this.$message({
-          message: result,
-          type: "success",
-        });
+        this.$message({ message: result, type: "success" });
         this.$store.dispatch("getLinksInfo");
       } catch (err) {
         this.$message.error("操作失败，请稍后再试！");
